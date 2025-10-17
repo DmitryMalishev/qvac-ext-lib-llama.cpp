@@ -4486,7 +4486,11 @@ static void ggml_vk_instance_init() {
         vk_instance.pfn_vkCmdInsertDebugUtilsLabelEXT = (PFN_vkCmdInsertDebugUtilsLabelEXT) vkGetInstanceProcAddr(vk_instance.instance, "vkCmdInsertDebugUtilsLabelEXT");
     }
 
+#ifndef FORCE_GGML_VK_PERF_LOGGER
     vk_perf_logger_enabled = getenv("GGML_VK_PERF_LOGGER") != nullptr;
+#else
+    vk_perf_logger_enabled = true;
+#endif
 
     std::vector<vk::PhysicalDevice> devices = vk_instance.instance.enumeratePhysicalDevices();
 
